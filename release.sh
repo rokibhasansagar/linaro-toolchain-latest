@@ -7,8 +7,6 @@ git config --global color.ui true
 baseAddr="https://releases.linaro.org/components/toolchain/binaries"
 branches="latest-4 latest-5 latest-6 latest-7"
 
-mkdir WORK && cd WORK
-
 for branch in $branches; do
     echo -en "Current branch is -- " && echo $branch
     # build-1, no-check
@@ -21,15 +19,14 @@ for branch in $branches; do
     # get archive
     wget -q --show-progress --progress=bar:force 2>&1 $fileAddr
     md5sum $fileName | awk '{print $1}' >> $branch-archive.md5
-    cd ..
-    mkdir linaro-toolchain-latest && cd linaro-toolchain-latest
-    git init && git checkout $branch
-    tar -xJvf ../WORK/$fileName -C .
+    tar -xJf $fileName && rm -f *.tar.xz
+    cd gcc-linaro-*
+    git init && git checkout --orphan $branch
     cp -a ../WORK/$branch-archive.md5 .
     git add -A .
     git commit -m "Release $branch Linaro Toolchain x86_64 Binaries at $(date +%Y%m%d-%H%M)"
     git remote add origin https://github.com/rokibhasansagar/linaro-toolchain-latest.git
-    git push -q https://$GitOAUTHToken@github.com/rokibhasansagar/linaro-toolchain-latest.git HEAD:$branch
+    git push -f -q https://$GitOAUTHToken@github.com/rokibhasansagar/linaro-toolchain-latest.git origin $branch
     cd ..
-    rm -rf linaro-toolchain-latest
+    rm -rf gcc-linaro-* *.txt *.md5
 done
