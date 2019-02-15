@@ -1,0 +1,15 @@
+os: linux
+dist: xenial
+sudo: required
+git:
+  depth: 3
+addons:
+  apt:
+    update:
+    - true
+before_install:
+  - git clone 'https://github.com/rokibhasansagar/linaro-toolchain-latest' 'linaro-toolchain-latest'
+script:
+  - "travis_wait 30 sleep 1800 &"
+  - chmod +x ./release.sh
+  - ./release.sh
