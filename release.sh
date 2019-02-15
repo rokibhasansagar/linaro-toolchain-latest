@@ -22,9 +22,9 @@ for branch in $branches; do
     tar -xJf $fileName && rm -f *.tar.xz
     cd gcc-linaro-*
     git init && git checkout --orphan $branch
-    cp -a ../WORK/$branch-archive.md5 .
+    cp -a ../$branch-archive.md5 .
     git add -A .
-    git commit -m "Release $branch Linaro Toolchain x86_64 Binaries at $(date +%Y%m%d-%H%M)"
+    git commit -q -m "Release $branch Linaro Toolchain x86_64 Binaries at $(date +%Y%m%d-%H%M)"
     git remote add origin https://github.com/rokibhasansagar/linaro-toolchain-latest.git
     git push -f -q https://$GitOAUTHToken@github.com/rokibhasansagar/linaro-toolchain-latest.git origin $branch
     cd ..
