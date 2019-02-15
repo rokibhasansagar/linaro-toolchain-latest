@@ -12,14 +12,14 @@ mkdir ../temp || echo -e "../temp folder creation error"
 for branch in $branches; do
     echo -en "Current branch is --" && echo $branch
     echo $branch >> ../temp/branch.txt
-    tcBranch=$(cat '../temp/branch.txt')
+    tcBranch=$(cat ../temp/branch.txt)
     echo -en "ToolChain branch is --" && echo $tcBranch
-    git checkout "$tcBranch"
+    git checkout $tcBranch
     echo -e "Getting new file name from release server"
     curl -s "$baseAddr/$tcBranch/aarch64-linux-gnu/" | grep "x86_64_aarch64-linux-gnu.tar.xz" | sort | cut -d , -f3 | tail -n 2 | head -n 1 | awk '{print substr($1,2)}' | sed 's/....$//g' >> ../temp/latest-file-name.txt
-    fileName=$(cat '../temp/latest-file-name.txt')
+    fileName=$(cat ../temp/latest-file-name.txt)
     echo -en "New filename is -- " && echo $fileName
-    fileAddr=$baseAddr/$tcBranch/$(cat '../temp/release-file.txt')
+    fileAddr=$baseAddr/$tcBranch/aarch64-linux-gnu/$fileName
     echo -en "Full URL is -- " && echo $fileAddr
     wget -q --show-progress -P ../temp/ $fileAddr
     ls -la ../temp/ || echo "File download error"
