@@ -25,8 +25,11 @@ for branch in $branches; do
     cp -a ../$branch-archive.md5 .
     git add -A .
     git commit -q -m "Release $branch Linaro Toolchain x86_64 Binaries at $(date +%Y%m%d-%H%M)"
+    sleep 3
     git remote add origin https://github.com/rokibhasansagar/linaro-toolchain-latest.git
-    git push -f -q https://$GitOAUTHToken@github.com/rokibhasansagar/linaro-toolchain-latest.git origin $branch
+    git branch --track -f master
+    git push -f -q https://$GitOAUTHToken@github.com/rokibhasansagar/linaro-toolchain-latest.git HEAD:$branch
+    sleep 2
     cd ..
     rm -rf gcc-linaro-* *.txt *.md5
 done
