@@ -11,7 +11,7 @@ install: true
 script:
   - "travis_wait 30 sleep 1800 &"
   - chmod +x ./release.sh
-  - bash /release.sh
+  - bash ./release.sh
 branches:
   only:
   - master
