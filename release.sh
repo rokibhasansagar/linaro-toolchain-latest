@@ -23,7 +23,7 @@ for branch in $branches; do
         rm -rf 'linaro-toolchain-latest/*'
         tar -xJvf /tmp/${File_Name} --directory 'linaro-toolchain-latest/'
         md5sum /tmp/${File_Name} >> 'linaro-toolchain-latest/release-archive.md5'
-        cd 'linaro-toolchain-latest/
+        cd linaro-toolchain-latest/
         git add -A .
         git commit -m "Update Release at $(date +%Y%m%d-%H%M)"
         ##git push origin ${TC_Branch}
